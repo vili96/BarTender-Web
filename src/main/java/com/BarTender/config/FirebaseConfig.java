@@ -21,8 +21,8 @@ public class FirebaseConfig {
             String sysSeparator = File.separator;
             String firebaseJsonFilePath = currentDir + sysSeparator + "serverSetup" + sysSeparator + "bartender-97336-firebase-adminsdk-nukww-1b7ac22f14.json";
 
-//            FileInputStream serviceAccount = new FileInputStream( firebaseJsonFilePath );    // TODO: USE THIS TO INIT FIREBASE ON DIFFERENT MACHINE
-            FileInputStream serviceAccount = new FileInputStream( "D:\\uni\\MSP\\Diplomna\\serverSetup\\bartender-97336-firebase-adminsdk-nukww-1b7ac22f14.json" );
+            FileInputStream serviceAccount = new FileInputStream( firebaseJsonFilePath );    // TODO: USE THIS TO INIT FIREBASE ON DIFFERENT MACHINE
+//            FileInputStream serviceAccount = new FileInputStream( "D:\\uni\\MSP\\Diplomna\\serverSetup\\bartender-97336-firebase-adminsdk-nukww-1b7ac22f14.json" );
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials( GoogleCredentials.fromStream( serviceAccount ) )
