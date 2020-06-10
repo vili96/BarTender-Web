@@ -29,4 +29,4 @@ build/
 
 ### VS Code ###
 .vscode/
-!/src/main/java/com/BarTender/config/FirebaseConfig.java
+/serverSetup/bartender-97336-firebase-adminsdk-nukww-1b7ac22f14.json
