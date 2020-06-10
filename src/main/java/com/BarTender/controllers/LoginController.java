@@ -49,7 +49,11 @@ public class LoginController {
     @GetMapping(value = {"/home"})
     public ModelAndView home(HttpSession session) {
         ModelAndView model = new ModelAndView();
-        model.setViewName( "home" );
+        if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
+            model.setViewName( "login" );
+        } else {
+            model.setViewName( "home" );
+        }
         return model;
     }
 }
