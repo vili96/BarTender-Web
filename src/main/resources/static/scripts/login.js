@@ -1,12 +1,4 @@
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-// $('.firebaseui-id-submit').live('click', function() {
-//     console.log('here');
-//     var firstNameInput = $('.firebaseui-id-name');
-//     firstNameInput.addClass('hidden');
-//     firstNameInput.closest('div').addClass('hidden');
-// });
-
 ui.start('#firebaseui-auth-container', {
     callbacks: {
         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -32,6 +24,6 @@ ui.start('#firebaseui-auth-container', {
         }
     ],
     queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
-    signInSuccessUrl: '/dashboard',
+    signInSuccessUrl: 'home',
     credentialHelper: firebaseui.auth.CredentialHelper.NONE,
 });

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     @GetMapping(value = {"/","/index"})
-    public ModelAndView home() {
-        ModelAndView model = new ModelAndView( );
+    public ModelAndView index() {
+        ModelAndView model = new ModelAndView();
         model.setViewName( "login" );
         return model;
     }
@@ -33,7 +33,7 @@ public class LoginController {
         }
         session.setMaxInactiveInterval(1000000);
         session.setAttribute("userId", id);
-        model.setViewName("dashboard");
+        model.setViewName("home");
         model.addObject("session", session);
         return model;
     }
@@ -42,7 +42,14 @@ public class LoginController {
     public ModelAndView logout(HttpSession session) {
         session.invalidate();
         ModelAndView model = new ModelAndView( );
-        model.setViewName( "redirect:/" );
+        model.setViewName( "redirect:/index" );
+        return model;
+    }
+
+    @GetMapping(value = {"/home"})
+    public ModelAndView home(HttpSession session) {
+        ModelAndView model = new ModelAndView();
+        model.setViewName( "home" );
         return model;
     }
 }
