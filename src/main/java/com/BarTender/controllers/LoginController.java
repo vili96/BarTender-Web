@@ -2,6 +2,7 @@ package com.BarTender.controllers;
 
 import com.BarTender.models.User;
 import com.BarTender.services.UserLoginService;
+import com.BarTender.utils.AppConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-
+    private int managerRole = AppConstants.RoleConstants.MANAGER;
+    private int adminRole = AppConstants.RoleConstants.ADMIN;
     @GetMapping(value = {"/","/index"})
     public ModelAndView index() {
         ModelAndView model = new ModelAndView();
@@ -25,14 +27,18 @@ public class LoginController {
     public ModelAndView login(HttpSession session, @RequestParam String id, @RequestParam String email) {
         ModelAndView model = new ModelAndView();
         UserLoginService uService = new UserLoginService();
+        int roleId = adminRole;
         if (uService.getUserById(id) == null) {
             User user = new User();
             user.setId(id);
             user.setEmail(email);
+            user.setRoleId(managerRole);
+            roleId = managerRole;
             uService.addUser(user);
         }
         session.setMaxInactiveInterval(1000000);
         session.setAttribute("userId", id);
+        session.setAttribute("roleId", roleId);
         model.setViewName("home");
         model.addObject("session", session);
         return model;
@@ -52,6 +58,10 @@ public class LoginController {
         if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
             model.setViewName( "login" );
         } else {
+            if ((Integer) session.getAttribute("roleId") == adminRole) {
+                UserLoginService userLoginService = new UserLoginService();
+                model.addObject("managers", userLoginService.getAllManagers());
+            }
             model.setViewName( "home" );
         }
         return model;
