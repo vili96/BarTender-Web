@@ -1,6 +1,6 @@
 var storage = firebase.storage();
 var storageRef = storage.ref();
-var currentUser = firebase.auth().currentUser;
+var currentUser = $("#currentUser").val();
 
 $(document).ready(function(){
     $("#barImage").on('change', function (e) {
@@ -46,25 +46,19 @@ $(document).ready(function(){
         var name = $('#barName');
         var user = $('#userOptions');
         var imageUrl = $('#imageUrl');
+        var address = $('#barAddress');
         $.ajax({
             url: '/bar/create',
             method: 'POST',
             data: {
                 name: name.val(),
                 userId: user.val(),
-                imageUrl: imageUrl.val()
+                imageUrl: imageUrl.val(),
+                address: address.val()
             },
             success: function(response) {
-                if (response) {
-                    alert('Bar saved!')
-                } else {
-                    alert('Something failed, try again')
-                }
                 $('#addBarModal').modal('hide');
-                name.val('');
-                user.val('');
-                imageUrl.val('');
-                user.find('option').remove();
+                window.location.reload();
             }
         })
     });

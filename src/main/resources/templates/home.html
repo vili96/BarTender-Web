@@ -15,6 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.5.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-storage.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -27,6 +28,18 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/logout">Logout</a>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div th:each="bar : ${bars}" class="col-md-12">
+            <div class="card">
+                <h5 class="card-header" th:text="${bar.getName()}"></h5>
+                <div class="card-body">
+                    <h5 class="card-title">Photo</h5>
+                    <p class="card-text" th:text="${bar.getAddress()}"></p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>
@@ -57,6 +70,10 @@
                         <label for="barImage" class="col-form-label">Image:</label>
                         <input type="file" accept="image/*" id="barImage" name="image">
                     </div>
+                    <div class="form-group">
+                        <label for="barAddress" class="col-form-label">Address:</label>
+                        <textarea class="form-control" id="barAddress" name="address"></textarea>
+                    </div>
                     <input class="hidden" type="text" id="imageUrl" name="image">
                 </form>
             </div>
@@ -67,6 +84,10 @@
         </div>
     </div>
 </div>
+<form>
+    <input type="hidden" th:value="${uid}" id="currentUser">
+</form>
 </body>
+<script src="scripts/firebaseInit.js"></script>
 <script src="scripts/home.js"></script>
 </html>

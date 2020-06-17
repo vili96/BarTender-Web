@@ -1,6 +1,7 @@
 package com.BarTender.controllers;
 
 import com.BarTender.models.User;
+import com.BarTender.services.BarOperationsService;
 import com.BarTender.services.UserLoginService;
 import com.BarTender.utils.AppConstants;
 import org.springframework.stereotype.Controller;
@@ -60,9 +61,12 @@ public class LoginController {
         } else {
             if ((Integer) session.getAttribute("roleId") == adminRole) {
                 UserLoginService userLoginService = new UserLoginService();
+                BarOperationsService barService = new BarOperationsService();
                 model.addObject("managers", userLoginService.getAllManagers());
+                model.addObject("bars", barService.getAllBars());
             }
             model.setViewName( "home" );
+            model.addObject( "uid", session.getAttribute("userId").toString());
         }
         return model;
     }
