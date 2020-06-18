@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     private int managerRole = AppConstants.RoleConstants.MANAGER;
     private int adminRole = AppConstants.RoleConstants.ADMIN;
+    private int userRole = AppConstants.RoleConstants.USER;
     @GetMapping(value = {"/","/index"})
     public ModelAndView index() {
         ModelAndView model = new ModelAndView();
@@ -28,20 +29,28 @@ public class LoginController {
     public ModelAndView login(HttpSession session, @RequestParam String id, @RequestParam String email) {
         ModelAndView model = new ModelAndView();
         UserLoginService uService = new UserLoginService();
-        int roleId = adminRole;
-        if (uService.getUserById(id) == null) {
+        User existingUser = uService.getUserById(id);
+        int roleId;
+        if (existingUser == null) {
             User user = new User();
             user.setId(id);
             user.setEmail(email);
             user.setRoleId(managerRole);
             roleId = managerRole;
             uService.addUser(user);
+        } else {
+            roleId = existingUser.getRoleId();
         }
-        session.setMaxInactiveInterval(1000000);
-        session.setAttribute("userId", id);
-        session.setAttribute("roleId", roleId);
-        model.setViewName("home");
-        model.addObject("session", session);
+
+        if (roleId == userRole) {
+            model.setViewName("login");
+        } else {
+            session.setMaxInactiveInterval(1000000);
+            session.setAttribute("userId", id);
+            session.setAttribute("roleId", roleId);
+            model.setViewName("home");
+            model.addObject("session", session);
+        }
         return model;
     }
 
@@ -59,11 +68,15 @@ public class LoginController {
         if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
             model.setViewName( "login" );
         } else {
+            BarOperationsService barService = new BarOperationsService();
             if ((Integer) session.getAttribute("roleId") == adminRole) {
                 UserLoginService userLoginService = new UserLoginService();
-                BarOperationsService barService = new BarOperationsService();
                 model.addObject("managers", userLoginService.getAllManagers());
                 model.addObject("bars", barService.getAllBars());
+                model.addObject("role", String.valueOf(adminRole));
+            } else {
+                model.addObject("ownBars", barService.getAllCurrentUserBars(session.getAttribute("userId").toString()));
+                model.addObject("role", String.valueOf(managerRole));
             }
             model.setViewName( "home" );
             model.addObject( "uid", session.getAttribute("userId").toString());

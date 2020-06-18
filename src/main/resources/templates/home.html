@@ -27,12 +27,13 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/logout">Logout</a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
+                    <a th:if="${role == '0'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
+                    <a th:if="${role == '1'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addDrinkModal">Add drink</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" th:if="${role == '0'}">
         <div th:each="bar : ${bars}" class="col-md-12">
             <div class="card">
                 <h5 class="card-header" th:text="${bar.getName()}"></h5>
@@ -41,6 +42,24 @@
                     <p class="card-text" th:text="${bar.getAddress()}"></p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" th:if="${role == '1'}">
+        <div th:each="drink : ${drinks}" class="card col-md-4">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${drink.getName()}"></h5>
+                <p class="card-text" th:text="${drink.getDescription()}"></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:text="${drink.getAlcVolume()}"></li>
+                <li class="list-group-item" th:text="${drink.getAmount()}"></li>
+                <li class="list-group-item" th:text="${drink.getPrice()}"></li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
             </div>
         </div>
     </div>
@@ -80,6 +99,57 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" form="addBarForm" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addDrinkModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDrinkModalLabel">Add drink bar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addDrinkForm" action="#" method="">
+                    <div class="form-group">
+                        <label for="drinkName" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="drinkName" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="drinkAmount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="drinkAmount" name="amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="drinkPrice" class="col-form-label">Price:</label>
+                        <input type="number" class="form-control" id="drinkPrice" name="price">
+                    </div>
+                    <div class="form-group">
+                        <label for="drinkVolume" class="col-form-label">Alc volume:</label>
+                        <input type="number" class="form-control" id="drinkVolume" name="volume">
+                    </div>
+                    <div class="form-group">
+                        <label for="barOptions" class="col-form-label">Bar:</label>
+                        <select class="form-control" id="barOptions" name="bar">
+                            <option th:each="ownBar : ${ownBars}" th:value="${ownBar.getId()}" th:text="${ownBar.getName()}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="drinkImage" class="col-form-label">Image:</label>
+                        <input type="file" accept="image/*" id="drinkImage" name="image">
+                    </div>
+                    <div class="form-group">
+                        <label for="drinkDescription" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="drinkDescription" name="description"></textarea>
+                    </div>
+                    <input class="hidden" type="text" id="drinkImageUrl" name="image">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="addDrinkForm" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
