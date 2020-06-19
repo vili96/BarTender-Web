@@ -1,7 +1,10 @@
 .header {
     height: 120px;
-    background-color: cadetblue;
+    background-color: #dc5e49;
 }
 .hidden {
     display: none;
+}
+.bar-wrapper, .drink-wrapper {
+    margin-top: 15px;
 }

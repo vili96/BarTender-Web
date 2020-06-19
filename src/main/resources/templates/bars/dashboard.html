@@ -28,79 +28,25 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/logout">Logout</a>
                     <a th:if="${role == '0'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
-<!--                    <a th:if="${role == '1'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addDrinkModal">Add drink</a>-->
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div th:each="bar : ${bars}" class="col-md-12 bar-wrapper">
-            <div th:id="${bar.getUserId() + '-user'}" class="card">
-                <h5 th:id="${bar.getId() + '-name'}" class="card-header" th:text="${bar.getName()}"></h5>
-                <div class="card-body">
-                    <h5 class="card-title">Photo</h5>
-                    <p th:id="${bar.getId() + '-address'}" class="card-text" th:text="${bar.getAddress()}"></p>
-                    <a th:href="${'/bar/dashboard?barId=' + bar.getId()}" class="btn btn-primary bar-dashboard-btn">Preview</a>
-                    <a th:id="${bar.getId() + '-editBtn'}" class="btn btn-primary bar-edit-btn">Edit</a>
-                </div>
+        <div th:each="drink : ${drinks}" class="card col-md-3 drink-wrapper">
+            <img th:src="${drink.image}" class="card-img-top" alt="Image">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${drink.getName()}"></h5>
+                <p class="card-text" th:text="${drink.getDescription()}"></p>
             </div>
-        </div>
-    </div>
-<!--    <div class="row" th:if="${role == '1'}">-->
-<!--        <div th:each="drink : ${drinks}" class="card col-md-4">-->
-<!--            <img src="..." class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title" th:text="${drink.getName()}"></h5>-->
-<!--                <p class="card-text" th:text="${drink.getDescription()}"></p>-->
-<!--            </div>-->
-<!--            <ul class="list-group list-group-flush">-->
-<!--                <li class="list-group-item" th:text="${drink.getAlcVolume()}"></li>-->
-<!--                <li class="list-group-item" th:text="${drink.getAmount()}"></li>-->
-<!--                <li class="list-group-item" th:text="${drink.getPrice()}"></li>-->
-<!--            </ul>-->
-<!--            <div class="card-body">-->
-<!--                <a href="#" class="card-link">Card link</a>-->
-<!--                <a href="#" class="card-link">Another link</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-</div>
-<div class="modal fade" id="addBarModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addBarModalLabel">Add new bar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addBarForm" action="#" method="">
-                    <div class="form-group">
-                        <label for="barName" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="barName" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="userOptions" class="col-form-label">User:</label>
-                        <select class="form-control" id="userOptions" name="user">
-                            <option th:each="manager : ${managers}" th:value="${manager.getId()}" th:text="${manager.getEmail()}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="barImage" class="col-form-label">Image:</label>
-                        <input type="file" accept="image/*" id="barImage" name="image">
-                    </div>
-                    <div class="form-group">
-                        <label for="barAddress" class="col-form-label">Address:</label>
-                        <textarea class="form-control" id="barAddress" name="address"></textarea>
-                    </div>
-                    <input class="hidden" type="text" id="imageUrl" name="image">
-                    <input class="hidden" type="text" id="editBarId" name="image">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" form="addBarForm" class="btn btn-primary">Save</button>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:text="${drink.getAlcVolume()}"></li>
+                <li class="list-group-item" th:text="${drink.getAmount()}"></li>
+                <li class="list-group-item" th:text="${drink.getPrice()}"></li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
             </div>
         </div>
     </div>
@@ -161,5 +107,5 @@
 </form>
 </body>
 <script src="scripts/firebaseInit.js"></script>
-<script src="scripts/home.js"></script>
+<script src="scripts/bars/dashboard.js"></script>
 </html>

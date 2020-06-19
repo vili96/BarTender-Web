@@ -2,8 +2,10 @@ package com.BarTender.controllers;
 
 import com.BarTender.models.Bar;
 import com.BarTender.services.BarOperationsService;
+import com.BarTender.services.DrinkOperationsService;
 import com.BarTender.utils.AppConstants;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,45 @@ public class BarController {
             bar.setAddress(address);
             barService.addBar(bar);
             model.setViewName("home");
+        }
+        return model;
+    }
+
+    @RequestMapping(value = {"/bar/edit"}, method = RequestMethod.POST)
+    public ModelAndView editBar(HttpSession session, @RequestParam String name, @RequestParam String imageUrl, @RequestParam String userId, @RequestParam String address, @RequestParam String editId) {
+        ModelAndView model = new ModelAndView();
+        if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
+            model.setViewName( "login" );
+        } else {
+            BarOperationsService service = new BarOperationsService();
+            Bar bar = new Bar();
+            bar.setId(editId);
+            bar.setName(name);
+            bar.setImage(imageUrl);
+            bar.setUserId(userId);
+            bar.setAddress(address);
+            service.editBar(bar);
+            model.setViewName( "home" );
+        }
+        return model;
+    }
+
+    @GetMapping(value = {"/bar/dashboard"})
+    public ModelAndView previewBar(HttpSession session, @RequestParam String barId) {
+        ModelAndView model = new ModelAndView();
+        if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
+            model.setViewName( "redirect:/index" );
+        } else {
+            BarOperationsService barService = new BarOperationsService();
+            Bar bar = barService.getBarById(barId);
+            if (bar == null || (!bar.getUserId().equals(session.getAttribute("userId").toString()) && (Integer) session.getAttribute("roleId") != adminRole)) {
+                model.setViewName( "redirect:/home" );
+            } else {
+                DrinkOperationsService drinkService = new DrinkOperationsService();
+                model.addObject( "bar", bar );
+                model.addObject( "drinks", drinkService.getDrinksByBarId(barId) );
+                model.setViewName( "bars/dashboard" );
+            }
         }
         return model;
     }

@@ -6,7 +6,9 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -48,6 +50,32 @@ public class BarOperationsService {
             return null;
         } catch (InterruptedException | ExecutionException | NullPointerException e) {
             return null;
+        }
+    }
+
+    public Bar getBarById(String id) {
+        try {
+            List<QueryDocumentSnapshot> bars = database.collection("bars").get().get().getDocuments();
+            if (bars.stream().anyMatch(b -> b.getId().equals(id))) {
+                return bars.stream().filter(b -> b.getId().equals(id)).findFirst().get().toObject(Bar.class);
+            }
+            return null;
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
+
+    public void editBar(Bar bar) {
+        Map<String, Object> editedBar = new HashMap<>();
+        editedBar.put("name", bar.getName());
+        editedBar.put("address", bar.getAddress());
+        editedBar.put("userId", bar.getUserId());
+        if (bar.getImage() != null && !bar.getImage().isEmpty()) {
+            editedBar.put("image", bar.getImage());
+        }
+
+        if (bar.getId() != null && !bar.getId().isEmpty()) {
+            database.collection("bars").document(bar.getId()).update(editedBar);
         }
     }
 }

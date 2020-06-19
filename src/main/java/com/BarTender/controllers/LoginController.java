@@ -1,5 +1,6 @@
 package com.BarTender.controllers;
 
+import com.BarTender.models.Bar;
 import com.BarTender.models.User;
 import com.BarTender.services.BarOperationsService;
 import com.BarTender.services.UserLoginService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -69,15 +71,17 @@ public class LoginController {
             model.setViewName( "login" );
         } else {
             BarOperationsService barService = new BarOperationsService();
+            String role = session.getAttribute("roleId").toString();
+            List<Bar> bars;
             if ((Integer) session.getAttribute("roleId") == adminRole) {
                 UserLoginService userLoginService = new UserLoginService();
                 model.addObject("managers", userLoginService.getAllManagers());
-                model.addObject("bars", barService.getAllBars());
-                model.addObject("role", String.valueOf(adminRole));
+                bars = barService.getAllBars();
             } else {
-                model.addObject("ownBars", barService.getAllCurrentUserBars(session.getAttribute("userId").toString()));
-                model.addObject("role", String.valueOf(managerRole));
+                bars = barService.getAllCurrentUserBars(session.getAttribute("userId").toString());
             }
+            model.addObject("bars", bars);
+            model.addObject("role", role);
             model.setViewName( "home" );
             model.addObject( "uid", session.getAttribute("userId").toString());
         }
