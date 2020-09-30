@@ -79,6 +79,7 @@ public class LoginController {
                 bars = barService.getAllBars();
             } else {
                 bars = barService.getAllCurrentUserBars(session.getAttribute("userId").toString());
+                model.addObject("ownBars", bars);
             }
             model.addObject("bars", bars);
             model.addObject("role", role);

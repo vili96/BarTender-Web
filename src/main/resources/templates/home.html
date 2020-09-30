@@ -28,7 +28,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/logout">Logout</a>
                     <a th:if="${role == '0'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
-<!--                    <a th:if="${role == '1'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addDrinkModal">Add drink</a>-->
+                    <a th:if="${role == '1'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addDrinkModal">Add drink</a>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                         <textarea class="form-control" id="barAddress" name="address"></textarea>
                     </div>
                     <input class="hidden" type="text" id="imageUrl" name="image">
-                    <input class="hidden" type="text" id="editBarId" name="image">
+                    <input class="hidden" type="text" id="editBarId" name="edit">
                 </form>
             </div>
             <div class="modal-footer">

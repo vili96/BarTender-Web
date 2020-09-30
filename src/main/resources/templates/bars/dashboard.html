@@ -28,6 +28,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/logout">Logout</a>
                     <a th:if="${role == '0'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addBarModal">Add bar</a>
+                    <a th:if="${role == '1'}" class="dropdown-item" href="#" data-toggle="modal" data-target="#addDrinkModal">Add drink</a>
                 </div>
             </div>
         </div>
@@ -36,17 +37,16 @@
         <div th:each="drink : ${drinks}" class="card col-md-3 drink-wrapper">
             <img th:src="${drink.image}" class="card-img-top" alt="Image">
             <div class="card-body">
-                <h5 class="card-title" th:text="${drink.getName()}"></h5>
-                <p class="card-text" th:text="${drink.getDescription()}"></p>
+                <h5 th:id="${drink.getId() + '-name'}" class="card-title" th:text="${drink.getName()}"></h5>
+                <p th:id="${drink.getId() + '-description'}" class="card-text" th:text="${drink.getDescription()}"></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" th:text="${drink.getAlcVolume()}"></li>
-                <li class="list-group-item" th:text="${drink.getAmount()}"></li>
-                <li class="list-group-item" th:text="${drink.getPrice()}"></li>
+                <li th:id="${drink.getId() + '-alcVolume'}" class="list-group-item" th:text="${drink.getAlcVolume()}"></li>
+                <li th:id="${drink.getId() + '-amount'}" class="list-group-item" th:text="${drink.getAmount()}"></li>
+                <li th:id="${drink.getId() + '-price'}" class="list-group-item" th:text="${drink.getPrice()}"></li>
             </ul>
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <a th:id="${drink.getId() + '-editBtn'}" class="btn btn-primary drink-edit-btn">Edit</a>
             </div>
         </div>
     </div>
@@ -93,6 +93,7 @@
                         <textarea class="form-control" id="drinkDescription" name="description"></textarea>
                     </div>
                     <input class="hidden" type="text" id="drinkImageUrl" name="image">
+                    <input class="hidden" type="text" id="editDrinkId" name="edit">
                 </form>
             </div>
             <div class="modal-footer">
@@ -104,8 +105,9 @@
 </div>
 <form>
     <input type="hidden" th:value="${uid}" id="currentUser">
+    <input type="hidden" th:value="${barId}" id="currentBar">
 </form>
 </body>
-<script src="scripts/firebaseInit.js"></script>
-<script src="scripts/bars/dashboard.js"></script>
+<script src="/scripts/firebaseInit.js"></script>
+<script src="/scripts/bars/dashboard.js"></script>
 </html>

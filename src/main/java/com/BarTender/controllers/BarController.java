@@ -45,13 +45,16 @@ public class BarController {
             model.setViewName( "login" );
         } else {
             BarOperationsService service = new BarOperationsService();
-            Bar bar = new Bar();
-            bar.setId(editId);
-            bar.setName(name);
-            bar.setImage(imageUrl);
-            bar.setUserId(userId);
-            bar.setAddress(address);
-            service.editBar(bar);
+            Bar bar = service.getBarById(editId);
+            if (bar != null) {
+                bar.setName(name);
+                bar.setImage(imageUrl);
+                if ((Integer) session.getAttribute("roleId") == adminRole) {
+                    bar.setUserId(userId);
+                }
+                bar.setAddress(address);
+                service.editBar(bar);
+            }
             model.setViewName( "home" );
         }
         return model;
@@ -69,8 +72,13 @@ public class BarController {
                 model.setViewName( "redirect:/home" );
             } else {
                 DrinkOperationsService drinkService = new DrinkOperationsService();
-                model.addObject( "bar", bar );
-                model.addObject( "drinks", drinkService.getDrinksByBarId(barId) );
+                model.addObject( "uid", session.getAttribute("userId").toString());
+                model.addObject( "role", session.getAttribute("roleId").toString());
+                model.addObject( "barId", bar.getId());
+                model.addObject( "drinks", drinkService.getDrinksByBarId(barId));
+                if ((Integer) session.getAttribute("roleId") != adminRole) {
+                    model.addObject("ownBars", barService.getAllCurrentUserBars(session.getAttribute("userId").toString()));
+                }
                 model.setViewName( "bars/dashboard" );
             }
         }
