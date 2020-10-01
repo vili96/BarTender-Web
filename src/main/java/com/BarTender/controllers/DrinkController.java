@@ -42,4 +42,31 @@ public class DrinkController {
         }
         return model;
     }
+
+    @RequestMapping(value = "/drink/edit", method = RequestMethod.POST)
+    public ModelAndView editDrink(HttpSession session, @RequestParam String name,
+          @RequestParam String imageUrl, @RequestParam String barId,
+          @RequestParam String description, @RequestParam String amount,
+          @RequestParam String volume, @RequestParam String price, @RequestParam String editId
+    ) {
+        ModelAndView model = new ModelAndView();
+        if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
+            model.setViewName( "login" );
+        } else {
+            DrinkOperationsService drinkOperationsService = new DrinkOperationsService();
+            Drink drink = drinkOperationsService.getDrinkById(editId);
+            if (drink != null) {
+                drink.setName(name);
+                drink.setImage(imageUrl);
+                drink.setBarId(barId);
+                drink.setDescription(description);
+                drink.setAmount(Double.parseDouble(amount));
+                drink.setAlcVolume(Double.parseDouble(volume));
+                drink.setPrice(Double.parseDouble(price));
+                drinkOperationsService.editDrink(drink);
+            }
+            model.setViewName( "bars/dashboard" );
+        }
+        return model;
+    }
 }

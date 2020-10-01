@@ -56,4 +56,49 @@ $(document).ready(function() {
             $('#addDrinkModal').modal();
         }
     });
+
+    $('#addDrinkForm').on('submit', function(e) {
+        e.preventDefault();
+        var name = $('#drinkName');
+        var amount = $('#drinkAmount');
+        var price = $('#drinkPrice');
+        var volume = $('#drinkVolume');
+        var bar = $('#barOptions');
+        var imageUrl = $('#drinkImageUrl');
+        var description = $('#drinkDescription');
+        var isEdit = $('#editDrinkId').val();
+        var url = '/drink/create';
+        var params = {
+            name: name.val(),
+            amount: amount.val(),
+            price: price.val(),
+            volume: volume.val(),
+            barId: bar.val(),
+            imageUrl: imageUrl.val(),
+            description: description.val()
+        };
+        if (isEdit) {
+            url = '/drink/edit';
+            params.editId = isEdit;
+        }
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: params,
+            success: function(response) {
+                $('#addDrinkModal').modal('hide');
+                window.location.reload();
+            }
+        })
+    });
+    $("#addDrinkModal").on('hide.bs.modal', function(e) {
+        $('#drinkName').val('');
+        $('#drinkAmount').val('');
+        $('#drinkPrice').val('');
+        $('#drinkVolume').val('');
+        $('#barOptions').val('');
+        $('#drinkImageUrl').val('');
+        $('#drinkDescription').val('');
+        $('#editDrinkId').val('');
+    });
 });
