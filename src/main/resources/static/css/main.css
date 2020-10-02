@@ -8,3 +8,9 @@
 .bar-wrapper, .drink-wrapper {
     margin-top: 15px;
 }
+
+.login{
+    background-image: url("../img/home2bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
