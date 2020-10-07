@@ -152,4 +152,14 @@ $(document).ready(function(){
         $('#barAddress').val('');
         $('#userOptions').val('');
     });
+    $("#barsItem").on('click', function(e) {
+       var $icon = $("#barsDropDownIcon");
+       if ($icon.hasClass('icon-sort-down')) {
+           $icon.removeClass('icon-sort-down');
+           $icon.addClass('icon-chevron-left');
+       } else {
+           $icon.addClass('icon-sort-down');
+           $icon.removeClass('icon-chevron-left');
+       }
+    });
 });

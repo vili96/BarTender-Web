@@ -7,10 +7,18 @@
 }
 .bar-wrapper, .drink-wrapper {
     margin-top: 15px;
+    padding-left: 10px;
+    right: 10px;
 }
 
 .login{
     background-image: url("../img/home2bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+}
+.custom-icon{
+    margin-left: 10px;
+}
+.bar-edit-btn {
+    color: white !important;
 }
