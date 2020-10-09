@@ -66,6 +66,33 @@ $(document).ready(function() {
         }
     });
 
+    $(".user-delete-btn").on('click', function(e) {
+        var userId = $(e.target).attr('id').split('-')[0];
+        bootbox.confirm({
+            message: "Are you sure you want to delete that user?",
+            buttons: {
+                confirm: {
+                    className: 'btn-warning'
+                }
+            },
+            size: 'large',
+            callback: function(data) {
+            if (data) {
+                $.ajax({
+                    url: '/user/delete',
+                    method: 'POST',
+                    data: {
+                        userId: userId
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                })
+            }
+        }
+    });
+    });
+
     $('#addDrinkForm').on('submit', function(e) {
         e.preventDefault();
         var name = $('#drinkName');

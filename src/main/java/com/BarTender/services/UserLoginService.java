@@ -74,4 +74,8 @@ public class UserLoginService {
             database.collection("users").document(user.getId()).update(editedUser);
         }
     }
+
+    public void deleteUser(String id) {
+        database.collection("users").document(id).delete();
+    }
 }

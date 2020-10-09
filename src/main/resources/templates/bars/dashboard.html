@@ -430,21 +430,23 @@
             </div>
         </div>
         <div class="app-main__outer">
-            <div class="row bar-wrapper">
-                <div th:each="drink : ${drinks}" class="card col-md-3 drink-wrapper">
-                    <img th:src="${drink.image}" class="card-img-top" alt="Image">
-                    <div class="card-body">
-                        <h5 th:id="${drink.getId() + '-name'}" class="card-title" th:text="${'Name: ' + drink.getName()}"></h5>
-                        <p th:id="${drink.getId() + '-description'}" class="card-text" th:text="${'Description: ' + drink.getDescription()}"></p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:id="${drink.getId() + '-alcVolume'}" class="list-group-item" th:text="${'Volume: ' + drink.getAlcVolume()}"></li>
-                        <li th:id="${drink.getId() + '-amount'}" class="list-group-item" th:text="${'Amount: ' + drink.getAmount()}"></li>
-                        <li th:id="${drink.getId() + '-price'}" class="list-group-item" th:text="${'Price: ' + drink.getPrice()}"></li>
-                    </ul>
-                    <div class="card-body">
-                        <a th:id="${drink.getId() + '-editBtn'}" class="btn btn-primary drink-edit-btn">Edit</a>
-                        <a th:id="${drink.getId() + '-deleteBtn'}" class="btn btn-danger drink-delete-btn">Delete</a>
+            <div class="row">
+                <div th:each="drink : ${drinks}" class="col-md-4 drink-wrapper">
+                    <div class="card">
+                        <img th:src="${drink.image}" class="card-img-top" alt="Image">
+                        <div class="card-body drink-description">
+                            <h5 th:id="${drink.getId() + '-name'}" class="card-title" th:text="${'Name: ' + drink.getName()}"></h5>
+                            <p th:id="${drink.getId() + '-description'}" class="card-text" th:text="${'Description: ' + drink.getDescription()}"></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li th:id="${drink.getId() + '-alcVolume'}" class="list-group-item" th:text="${'Volume: ' + drink.getAlcVolume()}"></li>
+                            <li th:id="${drink.getId() + '-amount'}" class="list-group-item" th:text="${'Amount: ' + drink.getAmount()}"></li>
+                            <li th:id="${drink.getId() + '-price'}" class="list-group-item" th:text="${'Price: ' + drink.getPrice()}"></li>
+                        </ul>
+                        <div class="card-body">
+                            <a th:id="${drink.getId() + '-editBtn'}" class="btn btn-primary drink-edit-btn">Edit</a>
+                            <a th:id="${drink.getId() + '-deleteBtn'}" class="btn btn-danger drink-delete-btn">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>

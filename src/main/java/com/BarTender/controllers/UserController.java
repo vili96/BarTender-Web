@@ -61,4 +61,21 @@ public class UserController {
         }
         return model;
     }
+
+    @RequestMapping(value = {"/user/delete"}, method = RequestMethod.POST)
+    public ModelAndView deleteUser(HttpSession session, @RequestParam String userId) {
+        ModelAndView model = new ModelAndView();
+        if (session.getAttribute("userId") == null || session.getAttribute("userId").toString().equals("")) {
+            model.setViewName( "login" );
+        } else {
+            UserLoginService service = new UserLoginService();
+            User user = service.getUserById(userId);
+            if (user != null && (Integer) session.getAttribute("roleId") == adminRole &&
+                    !session.getAttribute("userId").toString().equals(user.getId())) {
+                service.deleteUser(userId);
+            }
+            model.setViewName( "users/list" );
+        }
+        return model;
+    }
 }

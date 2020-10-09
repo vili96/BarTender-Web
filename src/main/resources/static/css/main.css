@@ -12,7 +12,8 @@
 }
 .drink-wrapper {
     margin-top: 15px;
-    margin-left: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 .login{
     background-image: url("../img/home2bg.jpg");
@@ -30,4 +31,7 @@
 }
 .users-table {
     margin-top: 15px;
+}
+.drink-description {
+    height: 110px;
 }
