@@ -1,5 +1,7 @@
 package com.BarTender.models;
 
+import com.BarTender.services.BarOperationsService;
+
 import java.util.Objects;
 
 public class Drink {
@@ -137,5 +139,14 @@ public class Drink {
                 ", ordersCount=" + ordersCount +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    public String getBarName() {
+        BarOperationsService service = new BarOperationsService();
+        Bar bar = service.getBarById(this.barId);
+        if (bar != null) {
+            return bar.getName();
+        }
+        return "-";
     }
 }

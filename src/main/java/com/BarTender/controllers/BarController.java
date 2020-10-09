@@ -74,6 +74,7 @@ public class BarController {
                 DrinkOperationsService drinkService = new DrinkOperationsService();
                 model.addObject( "uid", session.getAttribute("userId").toString());
                 model.addObject( "role", session.getAttribute("roleId").toString());
+                model.addObject( "email", session.getAttribute("email").toString());
                 model.addObject( "barId", bar.getId());
                 model.addObject( "drinks", drinkService.getDrinksByBarId(barId));
                 if ((Integer) session.getAttribute("roleId") != adminRole) {

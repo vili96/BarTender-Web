@@ -50,6 +50,7 @@ public class LoginController {
             session.setMaxInactiveInterval(1000000);
             session.setAttribute("userId", id);
             session.setAttribute("roleId", roleId);
+            session.setAttribute("email", email);
             model.setViewName("home");
             model.addObject("session", session);
         }
@@ -83,6 +84,7 @@ public class LoginController {
             }
             model.addObject("bars", bars);
             model.addObject("role", role);
+            model.addObject("email", session.getAttribute("email").toString());
             model.setViewName( "home" );
             model.addObject( "uid", session.getAttribute("userId").toString());
         }

@@ -5,12 +5,15 @@
 .hidden {
     display: none;
 }
-.bar-wrapper, .drink-wrapper {
+.bar-wrapper {
     margin-top: 15px;
     padding-left: 10px;
     right: 10px;
 }
-
+.drink-wrapper {
+    margin-top: 15px;
+    margin-left: 20px;
+}
 .login{
     background-image: url("../img/home2bg.jpg");
     background-repeat: no-repeat;
@@ -19,6 +22,9 @@
 .custom-icon{
     margin-left: 10px;
 }
-.bar-edit-btn {
+.bar-edit-btn, .drink-edit-btn, .bar-delete-btn, .drink-delete-btn {
     color: white !important;
+}
+.app-header {
+    background-color: #DB7A6A !important;
 }

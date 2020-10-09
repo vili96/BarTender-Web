@@ -107,33 +107,33 @@ $(document).ready(function(){
             }
         })
     });
-    $('#addDrinkForm').on('submit', function(e) {
-        e.preventDefault();
-        var name = $('#drinkName');
-        var amount = $('#drinkAmount');
-        var price = $('#drinkPrice');
-        var volume = $('#drinkVolume');
-        var bar = $('#barOptions');
-        var imageUrl = $('#drinkImageUrl');
-        var description = $('#drinkDescription');
-        $.ajax({
-            url: '/drink/create',
-            method: 'POST',
-            data: {
-                name: name.val(),
-                amount: amount.val(),
-                price: price.val(),
-                volume: volume.val(),
-                barId: bar.val(),
-                imageUrl: imageUrl.val(),
-                description: description.val()
-            },
-            success: function(response) {
-                $('#addDrinkModal').modal('hide');
-                window.location.reload();
-            }
-        })
-    });
+    // $('#addDrinkForm').on('submit', function(e) {
+    //     e.preventDefault();
+    //     var name = $('#drinkName');
+    //     var amount = $('#drinkAmount');
+    //     var price = $('#drinkPrice');
+    //     var volume = $('#drinkVolume');
+    //     var bar = $('#barOptions');
+    //     var imageUrl = $('#drinkImageUrl');
+    //     var description = $('#drinkDescription');
+    //     $.ajax({
+    //         url: '/drink/create',
+    //         method: 'POST',
+    //         data: {
+    //             name: name.val(),
+    //             amount: amount.val(),
+    //             price: price.val(),
+    //             volume: volume.val(),
+    //             barId: bar.val(),
+    //             imageUrl: imageUrl.val(),
+    //             description: description.val()
+    //         },
+    //         success: function(response) {
+    //             $('#addDrinkModal').modal('hide');
+    //             window.location.reload();
+    //         }
+    //     })
+    // });
     $(".bar-edit-btn").on('click', function(e) {
         var barId = $(e.target).attr('id').split('-editBtn')[0];
         if (barId) {
@@ -152,8 +152,8 @@ $(document).ready(function(){
         $('#barAddress').val('');
         $('#userOptions').val('');
     });
-    $("#barsItem").on('click', function(e) {
-       var $icon = $("#barsDropDownIcon");
+    $(".listItem").on('click', function(e) {
+       var $icon = $(e.target).find('.custom-icon');
        if ($icon.hasClass('icon-sort-down')) {
            $icon.removeClass('icon-sort-down');
            $icon.addClass('icon-chevron-left');
@@ -161,5 +161,10 @@ $(document).ready(function(){
            $icon.addClass('icon-sort-down');
            $icon.removeClass('icon-chevron-left');
        }
+    });
+
+    $('.custom-icon').on('click', function(e) {
+        e.preventDefault();
+        $(e.target).closest('li').trigger('click');
     });
 });
