@@ -57,6 +57,15 @@ $(document).ready(function() {
         }
     });
 
+    $(".user-edit-btn").on('click', function(e) {
+        var userId = $(e.target).attr('id').split('-editBtn')[0];
+        if (userId) {
+            $('#editUserId').val(userId);
+            $('#roleOptions').val($('#'+userId+'-roleId').text());
+            $('#editUserModal').modal();
+        }
+    });
+
     $('#addDrinkForm').on('submit', function(e) {
         e.preventDefault();
         var name = $('#drinkName');
@@ -91,6 +100,28 @@ $(document).ready(function() {
             }
         })
     });
+
+    $('#editUserForm').on('submit', function(e) {
+        e.preventDefault();
+        var role = $('#roleOptions').val();
+        var editUserId = $('#editUserId').val();
+        if (role) {
+            $.ajax({
+                url: '/user/edit',
+                method: 'POST',
+                data: {
+                    roleId: role,
+                    editUserId: editUserId
+                },
+                success: function(response) {
+                    $('#editUserModal').modal('hide');
+                    window.location.reload();
+                }
+            })
+        }
+
+    });
+
     $("#addDrinkModal").on('hide.bs.modal', function(e) {
         $('#drinkName').val('');
         $('#drinkAmount').val('');
@@ -99,6 +130,11 @@ $(document).ready(function() {
         $('#barOptions').val('');
         $('#drinkImageUrl').val('');
         $('#drinkDescription').val('');
+        $('#editDrinkId').val('');
+    });
+
+    $("#editUserModal").on('hide.bs.modal', function(e) {
+        $('#roleOptions').val('');
         $('#editDrinkId').val('');
     });
 });

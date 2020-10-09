@@ -29,9 +29,9 @@
             <div class="header__pane ml-auto">
                 <div>
                     <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
-                                <span class="hamburger-box">
-                                    <span class="hamburger-inner"></span>
-                                </span>
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -39,20 +39,20 @@
         <div class="app-header__mobile-menu">
             <div>
                 <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
                 </button>
             </div>
         </div>
         <div class="app-header__menu">
-                    <span>
-                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                            <span class="btn-icon-wrapper">
-                                <i class="fa fa-ellipsis-v fa-w-6"></i>
-                            </span>
-                        </button>
+            <span>
+                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                    <span class="btn-icon-wrapper">
+                        <i class="fa fa-ellipsis-v fa-w-6"></i>
                     </span>
+                </button>
+            </span>
         </div>
         <div class="app-header__content">
             <div class="app-header-right">
@@ -352,9 +352,9 @@
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
-                                <span class="hamburger-box">
-                                    <span class="hamburger-inner"></span>
-                                </span>
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -362,9 +362,9 @@
             <div class="app-header__mobile-menu">
                 <div>
                     <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -400,7 +400,7 @@
                             </ul>
                         </li>
                         <li class="listItem" th:if="${role == '1'}">
-                            <a class="listItem" href="#">
+                            <a href="#">
                                 Drinks
                                 <i class="icon-sort-down custom-icon"></i>
                             </a>
@@ -430,21 +430,37 @@
             </div>
         </div>
         <div class="app-main__outer">
-            <div class="row bar-wrapper">
-                <div th:each="drink : ${drinks}" class="card col-md-3 drink-wrapper">
-                    <img th:src="${drink.image}" class="card-img-top" alt="Image">
-                    <div class="card-body">
-                        <h5 th:id="${drink.getId() + '-name'}" class="card-title" th:text="${'Name: ' + drink.getName()}"></h5>
-                        <p th:id="${drink.getId() + '-description'}" class="card-text" th:text="${'Description: ' + drink.getDescription()}"></p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li th:id="${drink.getId() + '-alcVolume'}" class="list-group-item" th:text="${'Volume: ' + drink.getAlcVolume()}"></li>
-                        <li th:id="${drink.getId() + '-amount'}" class="list-group-item" th:text="${'Amount: ' + drink.getAmount()}"></li>
-                        <li th:id="${drink.getId() + '-price'}" class="list-group-item" th:text="${'Price: ' + drink.getPrice()}"></li>
-                    </ul>
-                    <div class="card-body">
-                        <a th:id="${drink.getId() + '-editBtn'}" class="btn btn-primary drink-edit-btn">Edit</a>
-                        <a th:id="${drink.getId() + '-deleteBtn'}" class="btn btn-danger drink-delete-btn">Delete</a>
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card users-table">
+                    <div class="card-body"><h5 class="card-title">All users</h5>
+                        <table class="mb-0 table table-hover">
+                            <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                                <th class="hidden"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.getEmail()}"></td>
+                                <td th:switch="${user.getRoleId()}">
+                                    <span th:case="'0'">Admin</span>
+                                    <span th:case="'1'">Manager</span>
+                                    <span th:case="'2'">Client</span>
+                                    <span th:case="*">-</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button th:id="${user.getId() + '-editBtn'}" class="btn btn-secondary user-edit-btn">Change Role</button>
+                                        <button th:id="${user.getId() + '-deleteBtn'}" type="button" class="btn btn-danger user-delete-btn">Delete</button>
+                                    </div>
+                                </td>
+                                <td class="hidden" th:id="${user.getId() + '-roleId'}" th:text="${user.getRoleId()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -542,9 +558,37 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit user role</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm" action="#" method="">
+                    <div class="form-group">
+                        <label for="roleOptions" class="col-form-label">Role:</label>
+                        <select class="form-control" id="roleOptions" name="role">
+                            <option value="0">Administrator</option>
+                            <option value="1">Manager</option>
+                            <option value="2">Client</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="editUserId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="editUserForm" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <form>
     <input type="hidden" th:value="${uid}" id="currentUser">
-    <input type="hidden" th:value="${barId}" id="currentBar">
 </form>
 </body>
 <script src="/scripts/theme/main.js"></script>

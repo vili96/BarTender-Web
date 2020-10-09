@@ -7,7 +7,9 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -44,6 +46,32 @@ public class UserLoginService {
             return null;
         } catch (InterruptedException | ExecutionException | NullPointerException e) {
             return null;
+        }
+    }
+
+    public List<User> getAllUsers() {
+        try {
+            List<QueryDocumentSnapshot> userCollection = database.collection("users").get().get().getDocuments();
+            if (userCollection.size() > 0) {
+                List<User> users = new ArrayList<>();
+                for (QueryDocumentSnapshot user:userCollection) {
+                    users.add(user.toObject(User.class));
+                }
+                return users;
+            }
+            return null;
+        } catch (InterruptedException | ExecutionException | NullPointerException e) {
+            return null;
+        }
+    }
+
+    public void editUser(User user) {
+        Map<String, Object> editedUser = new HashMap<>();
+        editedUser.put("email", user.getEmail());
+        editedUser.put("roleId", user.getRoleId());
+
+        if (user.getId() != null && !user.getId().isEmpty()) {
+            database.collection("users").document(user.getId()).update(editedUser);
         }
     }
 }
