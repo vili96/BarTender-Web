@@ -433,15 +433,20 @@
             <div class="row">
                 <div th:each="drink : ${drinks}" class="col-md-4 drink-wrapper">
                     <div class="card">
+                        <div th:id="${drink.getId() + '-name'}" class="hidden" th:text="${drink.getName()}"></div>
+                        <div th:id="${drink.getId() + '-description'}" class="hidden" th:text="${drink.getDescription()}"></div>
+                        <div th:id="${drink.getId() + '-alcVolume'}" class="hidden" th:text="${drink.getAlcVolume()}"></div>
+                        <div th:id="${drink.getId() + '-amount'}" class="hidden" th:text="${drink.getAmount()}"></div>
+                        <div th:id="${drink.getId() + '-price'}" class="hidden" th:text="${drink.getPrice()}"></div>
                         <img th:src="${drink.image}" class="card-img-top" alt="Image">
                         <div class="card-body drink-description">
-                            <h5 th:id="${drink.getId() + '-name'}" class="card-title" th:text="${'Name: ' + drink.getName()}"></h5>
-                            <p th:id="${drink.getId() + '-description'}" class="card-text" th:text="${'Description: ' + drink.getDescription()}"></p>
+                            <h5 class="card-title" th:text="${'Name: ' + drink.getName()}"></h5>
+                            <p class="card-text" th:text="${'Description: ' + drink.getDescription()}"></p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li th:id="${drink.getId() + '-alcVolume'}" class="list-group-item" th:text="${'Volume: ' + drink.getAlcVolume()}"></li>
-                            <li th:id="${drink.getId() + '-amount'}" class="list-group-item" th:text="${'Amount: ' + drink.getAmount()}"></li>
-                            <li th:id="${drink.getId() + '-price'}" class="list-group-item" th:text="${'Price: ' + drink.getPrice()}"></li>
+                            <li class="list-group-item" th:text="${'Volume: ' + drink.getAlcVolume()}"></li>
+                            <li class="list-group-item" th:text="${'Amount: ' + drink.getAmount()}"></li>
+                            <li class="list-group-item" th:text="${'Price: ' + drink.getPrice()}"></li>
                         </ul>
                         <div class="card-body">
                             <a th:id="${drink.getId() + '-editBtn'}" class="btn btn-primary drink-edit-btn">Edit</a>
@@ -535,6 +540,7 @@
                         <textarea class="form-control" id="drinkDescription" name="description"></textarea>
                     </div>
                     <input class="hidden" type="text" id="drinkImageUrl" name="image">
+                    <input class="hidden" type="text" id="editDrinkId" name="edit">
                 </form>
             </div>
             <div class="modal-footer">

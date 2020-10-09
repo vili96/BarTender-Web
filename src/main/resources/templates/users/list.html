@@ -452,7 +452,7 @@
                                     <span th:case="*">-</span>
                                 </td>
                                 <td>
-                                    <div class="btn-group" role="group">
+                                    <div th:if="${uid != user.getId()}" class="btn-group" role="group">
                                         <button th:id="${user.getId() + '-editBtn'}" class="btn btn-secondary user-edit-btn">Change Role</button>
                                         <button th:id="${user.getId() + '-deleteBtn'}" type="button" class="btn btn-danger user-delete-btn">Delete</button>
                                     </div>

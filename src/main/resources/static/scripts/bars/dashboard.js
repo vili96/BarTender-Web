@@ -136,6 +136,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '/user/edit',
                 method: 'POST',
+                async: false,
                 data: {
                     roleId: role,
                     editUserId: editUserId
